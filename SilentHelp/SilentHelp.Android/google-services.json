@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "954846662824",
+    "firebase_url": "https://silenthelp-rgd.firebaseio.com",
+    "project_id": "silenthelp-rgd",
+    "storage_bucket": "silenthelp-rgd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:954846662824:android:93843c5e80df4fcd",
+        "android_client_info": {
+          "package_name": "com.rgd.SilentHelp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "954846662824-ol357koo7o4bgndc49t68h2l4kbfceg8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5uekw3hltEwotJYfK1xk7pafXjZxGBDE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
