@@ -1,19 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Networking.PushNotifications;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Xamarin.Forms;
+using Application = Windows.UI.Xaml.Application;
+using Frame = Windows.UI.Xaml.Controls.Frame;
 
 namespace SilentHelp.UWP
 {
@@ -37,7 +42,7 @@ namespace SilentHelp.UWP
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected async override void OnLaunched(LaunchActivatedEventArgs e)
         {
 
 
@@ -72,6 +77,7 @@ namespace SilentHelp.UWP
             }
             // Ensure the current window is active
             Window.Current.Activate();
+            await InitRemoteNotificationAsync();
         }
 
         /// <summary>
@@ -96,6 +102,19 @@ namespace SilentHelp.UWP
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
+        }
+
+        private async Task InitRemoteNotificationAsync()
+        {
+            var channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
+            channel.PushNotificationReceived += OnPushNotificatioReceived;
+            Debug.WriteLine($"Received Token: {channel.Uri}");
+        }
+
+        private void OnPushNotificatioReceived(PushNotificationChannel sender, PushNotificationReceivedEventArgs args)
+        {
+            var msg = args.ToastNotification?.Content.InnerText;
+            MessagingCenter.Send<object,string>(this,SilentHelp.App.NOTIFICATION_RECEIVED_KEY,msg);
         }
     }
 }
